@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 19th Birthday Aanchal! ❤️</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff0f3; /* Soft romantic pink */
+            color: #4a044e;
+            overflow-x: hidden;
+        }
+
+        .font-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* 3D Flip Card CSS */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 350px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 1rem;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            color: white;
+        }
+
+        /* If you add an image later, this ensures it covers the front beautifully */
+        .flip-card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 1rem;
+            z-index: -1;
+            opacity: 0.8; /* Dim image slightly so text is readable */
+        }
+
+        .flip-card-back {
+            background-color: white;
+            color: #be185d;
+            transform: rotateY(180deg);
+            border: 2px solid #fbcfe8;
+        }
+
+        /* Floating Animation */
+        .float-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Entry Screen Overlay */
+        #entry-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-out;
+        }
+        
+        .typewriter-text {
+            border-right: 3px solid #be185d;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-pink-300 selection:text-pink-900">
+
+    <!-- Interactive Entry Screen -->
+    <div id="entry-screen">
+        <i data-lucide="gift" class="text-white w-24 h-24 mb-6 float-anim"></i>
+        <h1 class="text-white text-3xl md:text-5xl font-script mb-8 text-center px-4">I have a surprise for you...</h1>
+        <button onclick="enterSite()" class="px-8 py-4 bg-white text-pink-600 rounded-full font-bold text-lg shadow-lg hover:bg-pink-50 transition transform hover:scale-105 active:scale-95">
+            Tap to Open, Bachaa ❤️
+        </button>
+    </div>
+
+    <!-- Main Content (Hidden initially) -->
+    <main id="main-content" class="hidden opacity-0 transition-opacity duration-1000 ease-in pb-20">
+        
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20">
+            <h2 class="text-2xl md:text-3xl text-pink-500 font-semibold mb-2 uppercase tracking-widest">Happy 20th Birthday</h2>
+            <h1 class="text-6xl md:text-8xl font-script text-pink-600 mb-6 drop-shadow-sm float-anim">Aanchal</h1>
+            
+            <div class="text-xl md:text-3xl text-gray-700 mb-12 h-10 flex items-center justify-center">
+                <span>To my favorite </span>
+                <span id="typewriter" class="ml-2 font-bold text-pink-600 typewriter-text"></span>
+            </div>
+
+            <p class="max-w-2xl text-lg text-gray-600 leading-relaxed mb-8">
+                Welcome to your special birthday website! I wanted to make something unique just for you to celebrate two decades of your beautiful existence. Scroll down for a little trip down memory lane!
+            </p>
+            
+            <div class="animate-bounce mt-8">
+                <i data-lucide="chevron-down" class="w-10 h-10 text-pink-400"></i>
+            </div>
+        </section>
+
+        <!-- Interactive Memory Gallery -->
+        <section class="max-w-5xl mx-auto px-6 py-16">
+            <h2 class="text-4xl font-script text-center text-pink-600 mb-12">Tap the Cards to Reveal ❤️</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <!-- TO ADD AN IMAGE: Uncomment the img tag below and put your image link in the src="" -->
+                            <!-- <img src="YOUR_IMAGE_LINK_HERE.jpg" alt="Our Memory"> -->
+                            <i data-lucide="camera" class="w-16 h-16 text-white mb-4"></i>
+                            <h3 class="text-2xl font-script font-bold drop-shadow-md">Memory 1</h3>
+                            <p class="text-sm mt-2 font-medium bg-black/20 px-3 py-1 rounded-full">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back shadow-inner">
+                            <i data-lucide="heart" class="w-10 h-10 text-pink-500 mb-3"></i>
+                            <h3 class="text-xl font-bold mb-2">Our First Hello</h3>
+                            <p class="text-gray-600 text-sm">Even though this is a placeholder right now, just imagine a beautiful photo of us here. You make every moment special, Jaanu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+                            <!-- TO ADD AN IMAGE: Uncomment the img tag below and put your image link in the src="" -->
+                            <!-- <img src="YOUR_IMAGE_LINK_HERE.jpg" alt="Our Memory"> -->
+                            <i data-lucide="star" class="w-16 h-16 text-white mb-4"></i>
+                            <h3 class="text-2xl font-script font-bold drop-shadow-md">Memory 2</h3>
+                            <p class="text-sm mt-2 font-medium bg-black/20 px-3 py-1 rounded-full">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back shadow-inner">
+                            <i data-lucide="sparkles" class="w-10 h-10 text-purple-500 mb-3"></i>
+                            <h3 class="text-xl font-bold mb-2">The Way You Smile</h3>
+                            <p class="text-gray-600 text-sm">Your smile is literally my favorite thing in the world. I hope 20 brings you endless reasons to keep smiling, Babyjiii.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);">
+                            <!-- TO ADD AN IMAGE: Uncomment the img tag below and put your image link in the src="" -->
+                            <!-- <img src="YOUR_IMAGE_LINK_HERE.jpg" alt="Our Memory"> -->
+                            <i data-lucide="music" class="w-16 h-16 text-white mb-4"></i>
+                            <h3 class="text-2xl font-script font-bold drop-shadow-md">Memory 3</h3>
+                            <p class="text-sm mt-2 font-medium bg-black/20 px-3 py-1 rounded-full">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back shadow-inner">
+                            <i data-lucide="sun" class="w-10 h-10 text-orange-400 mb-3"></i>
+                            <h3 class="text-xl font-bold mb-2">To the Future</h3>
+                            <p class="text-gray-600 text-sm">Happy birthday to my absolute favorite person. Here is to making a million more memories together, Jaan.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Love Letter Section -->
+        <section class="max-w-3xl mx-auto px-6 mt-12 text-center">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-pink-100 relative">
+                <i data-lucide="quote" class="w-12 h-12 text-pink-200 absolute top-6 left-6 opacity-50"></i>
+                <h2 class="text-3xl font-script text-pink-600 mb-6 relative z-10">A little note for you...</h2>
+                <p class="text-gray-700 leading-relaxed mb-6 text-lg">
+                    Happy 20th Birthday! I just wanted to remind you how much you mean to me. You bring so much joy, chaos, and love into my life. I can't wait to see what this new decade brings for you. You deserve all the happiness in the world today and always.
+                </p>
+                <p class="font-script text-2xl text-pink-500 font-bold">
+                    Yours always, <br> <span class="text-gray-800 text-lg font-sans font-normal"> Apka Shanu ❤️</span>
+                </p>
+            </div>
+            
+            <button onclick="fireConfetti()" class="mt-12 px-8 py-3 bg-pink-500 text-white rounded-full font-bold shadow-lg hover:bg-pink-600 transition flex items-center justify-center mx-auto space-x-2">
+                <i data-lucide="party-popper" class="w-5 h-5"></i>
+                <span>Click for Birthday Magic!</span>
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // 1. Entry Screen & Initial Confetti Logic
+        function enterSite() {
+            const entryScreen = document.getElementById('entry-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            // Fade out entry screen
+            entryScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                entryScreen.style.display = 'none';
+                mainContent.classList.remove('hidden');
+                
+                // Trigger a slight delay before fading in main content
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                    fireConfetti(); // Big initial pop
+                    typeWriterEffect(); // Start typing nicknames
+                }, 100);
+            }, 1000); // Wait for fade out
+        }
+
+        // 2. Confetti Explosion Logic
+        function fireConfetti() {
+            var duration = 3000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff0000', '#ffc0cb', '#ffffff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff0000', '#ffc0cb', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // 3. Typewriter Effect for Nicknames
+        const nicknames = ["Babyjiii", "Jaanu", "Jaan", "Bachaa", "Girlfriend"];
+        let currentWordIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let typewriterElement = document.getElementById('typewriter');
+
+        function typeWriterEffect() {
+            const currentWord = nicknames[currentWordIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 100 : 150;
+
+            if (!isDeleting && currentCharIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause at the end of the word
+                isDeleting = true;
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentWordIndex = (currentWordIndex + 1) % nicknames.length;
+                typeSpeed = 500; // Pause before typing next word
+            }
+
+            setTimeout(typeWriterEffect, typeSpeed);
+        }
+    </script>
+</body>
+</html>
